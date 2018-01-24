@@ -3,7 +3,7 @@
 
 #include <cstdlib>
 
-enum class TurtleType { String, Integer, GiantInt, Double, Bool, Char };
+enum class TurtleType { String_TT, Integer_TT, GiantInt_TT, Double_TT, Bool_TT, Char_TT };
 
 class Object {
 
