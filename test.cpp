@@ -47,13 +47,12 @@ public:
 
 };
 
-
+//Push test
 class MetaRow {
-
+   
     int row_id;
     int row_size;
     int row_capacity;
-    
 
     Object **_row_data;
 
