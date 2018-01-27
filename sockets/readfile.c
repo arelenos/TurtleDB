@@ -1,23 +1,21 @@
 #include <stdio.h>
-
+#include <stdlib.h>
 
 
 int main() {
 
 
 	char buffer[256];
-	bzero(buffer, MAX_BUFFER_SIZE);
 	FILE *fp;
-	int numwords = 0;
-	char c;
-
-	fp = fopen(filename, "r");
-	while ((c = fgetc(fp)) != EOF) {
-		fscanf(fp, "%s", buffer);
-		if (isspace(c) || c == '\t') {
-			++numwords;
-		}
+	fp = fopen("rnd_file_xfer.txt", "r");
+	if (! fp) {
+		printf("File not found.\n");
+		exit(1);
 	}
+	while (fgets(buffer, 500, fp)) {
+		printf("%s", buffer);
+	}
+	printf("\n");
 
     return 0;
 }

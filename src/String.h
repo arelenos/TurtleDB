@@ -8,7 +8,8 @@
 
 
 class String : public Object {
-    char *str_data;
+    
+    std::string str_data;
     int str_size;
     int str_capacity;
 
