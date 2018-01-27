@@ -19,9 +19,14 @@ public:
     virtual unsigned int getObjectSize() const;
 
     virtual bool operator==(Object &other) const = 0;
+    virtual bool operator!=(Object &other) const = 0;
     virtual bool operator>(Object &other) const = 0;
     virtual bool operator<(Object &other) const = 0;
     virtual int compareObject(Object &other) const = 0;
+    virtual Object operator+(Object &other) const = 0;
+    virtual Object &operator+=(Object &other) = 0;
+    virtual String toString() const = 0;
+
     virtual Object *duplicate() const = 0;
 
     virtual void printObject() const = 0;

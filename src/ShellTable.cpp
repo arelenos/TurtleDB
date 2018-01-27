@@ -11,10 +11,6 @@ struct TurtleRow {};
 struct TurtleCol {};
 struct MetaTable {};
 
-// Possibly have exceptions inherit from other exceptions?
-struct NullPointerException { // No idea if this is correct
-	NullPointerException(std::string);
-}
 
 
 class InvalidTableInput {};
