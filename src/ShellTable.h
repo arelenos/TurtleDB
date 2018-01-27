@@ -57,17 +57,18 @@ class TurtleTable {
     void allocateData();
     void displayTable();
 
+    MetaRow getMetaRow(FILE file);
+
 
 
 public:
 
     TurtleTable(std::size_t num_rows, std::size_t num_cols, MetaRow row_data); // Reserve space
 
-	TurtleTable(VectorStr types, VectorStr labels);
+    TurtleTable(VectorStr types, VectorStr labels);
 
     TurtleTable(std::string filename);
 
-    TurtleTable(char* filename);
 
     // TurtleTable(const TurtleTable &other); // Copy Constructor //  No need if implementing swap function
    

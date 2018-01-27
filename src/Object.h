@@ -18,6 +18,7 @@ public:
 
     virtual unsigned int getObjectSize() const;
 
+    TurtleType getType();
     virtual bool operator==(Object &other) const = 0;
     virtual bool operator!=(Object &other) const = 0;
     virtual bool operator>(Object &other) const = 0;

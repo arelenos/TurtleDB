@@ -1,8 +1,9 @@
 #include "MetaRow.h"
 #include "String.h"
-
+#include "TurtleRow.h"
+#include <limits.h>
 // #include <string>
-// #include <vector>
+#include <vector>
 #include <iostream>
 #include <map>
 
@@ -12,49 +13,29 @@ struct TurtleCol {};
 struct MetaTable {};
 
 
+using namespace std;
 
 class InvalidTableInput {};
 
 typedef std::vector<std::string> VectorStr;
 
-// Please do: file -> preferences -> settings -> set tab size to 4
-class TurtleTable {
-	MetaTable meta_data;
-	MetaRow meta_row; 
-	TurtleRow **row_data;
-	TurtleCol **col_data;
-	int num_cols;
-	int num_rows;
-
-	TurtleTable(VectorStr types, VectorStr labels) {
-		if (types.size() != labels.size()) throw InvalidTableInput();
+TurtleTable::TurtleTable(VectorStr types, VectorStr labels) {
+	if (types.size() != labels.size()) throw InvalidTableInput();
 		num_cols = types.size();
-		
-	}
-	// May not be necessary to have multiple prototypes...
-	// Especially if explicit keyword is NOT used.
-	void constructTableFromCSV(std::string filename) { 
-		_constructTableFromCSV(std::string(filename));
-	}
-	void constructTableFromCSV(char *filename) {
-		if (not filename) throw NullPointerException("FileName");
-		_constructTableFromCSV(std::string(filename));
-	}
+	
+}
 
-	void _constructTableFromCSV(std::string) { 
-		// See Below (Matrix read from CSV)
-	};
+TurtleTable::TurtleTable(String filename){
+	_constructTableFromCSV(filename);
+}
 
-
-	~TurtleTable(){
-		for (int i = 0; i < this->num_rows; ++i) {
-			delete this->row_data[i]; // Delete objects that row points to
-		}
-		delete[] this->row_data;
-		delete[] this->col_data;
+TurtleTable::~TurtleTable(){
+	for (int i = 0; i < this->num_rows; ++i) {
+		delete this->row_data[i]; // Delete objects that row points to
 	}
-
-};
+	delete[] this->row_data;
+	delete[] this->col_data;
+}
 
 static size_t csvRowCount(const char *file_name) {
 	FILE *fptr = fopen(file_name, "r");
@@ -92,7 +73,7 @@ static size_t csvColumnCount(const char *file_name) {
 
 
 
-void readfromCSV(const char *file_name) {
+void TurtleTable::readfromCSV(const char *file_name) {
 
 	this->num_rows = csvRowCount(file_name);
 	this->num_cols = csvColumnCount(file_name);
@@ -139,12 +120,24 @@ void TurtleTable::allocateData(std::size_t num_rows, std::size_t num_cols, MetaR
 	}
 }
 
-void _constructTableFromCSV(const char *file_name) {
+MetaRow TurtleTable::getMetaRow(FILE *fp)(
+	if (! fp)throw FileNotFound();
+	std:size_t buff_size = MAX_INT;
+	MetaRow
+	for(int i = 0; i < this->num_cols; i++){
+		
+	}
+}
+
+
+void TurtleTable::_constructTableFromCSV(const char *file_name) {
 
 	this->num_rows = csvRowCount(file_name);
 	this->num_cols = csvColumnCount(file_name);
 
 	MetaRow rowinfo; // How to obtain from CSV? guess column types?
+
+	
 
 	this->allocateData(this->num_rows, this->num_cols, rowinfo);
 
@@ -155,8 +148,8 @@ void _constructTableFromCSV(const char *file_name) {
 		{TurtleTypes::Integer_TT, Object::NewInteger},
 		{TurtleTypes::String_TT, Object::NewString},
 		{TurtleTypes::Char_TT, Object::NewChar},
-		{TurtleTypes::Double_TT, Object::NewDouble}}
-	}
+		{TurtleTypes::Double_TT, Object::NewDouble}};
+	
 	std::size_t buff_size = (this->num_cols * sizeof(double) + 1) * TYPE_SIZE;
 	for (std::size_t row = 0; row < this->num_rows; ++row) {
 		char *row_data = new char[buff_size];
@@ -173,3 +166,4 @@ void _constructTableFromCSV(const char *file_name) {
 
 	fclose(fp);
 }
+
