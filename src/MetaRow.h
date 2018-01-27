@@ -19,7 +19,7 @@ public:
     ~MetaRow() { delete[] this->row_data; }
 
 
-    int getRowSize() { return this->row_size;
+    int getRowSize() { return this->row_size; }
 
 
 };

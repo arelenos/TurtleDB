@@ -3,11 +3,10 @@
 
 #include "Object.h"
 
-class CannotCastTypeAsInt {};
-
 class Integer : public Object {
 
     int int_value;
+
 
 public:
     // No need to overload with double/long etc, since NOT explicit
@@ -16,20 +15,26 @@ public:
     Integer(const std::string value);
     Integer(const String value);
 
-    virtual unsigned int getObjectSize() const;
 
-    virtual bool operator==(Object &other) const = 0;
-    virtual bool operator!=(Object &other) const = 0;
-    virtual bool operator>(Object &other) const = 0;
-    virtual bool operator<(Object &other) const = 0;
-    virtual int compareObject(Object &other) const = 0;
-    virtual Object operator+(Object &other) const = 0;
-    virtual Object &operator+=(Object &other) = 0;
-    virtual String toString() const = 0;
+    virtual bool operator==(Integer &other) const override;
+    virtual bool operator!=(Integer &other) const override;
+    virtual bool operator>(Integer &other) const override;
+    virtual bool operator<(Integer &other) const override;
 
-    virtual Object *duplicate() const = 0;
+    Integer operator+(Integer &other) const;
+    Integer operator-(Integer &other) const;
+    Integer operator*(Integer &other) const;
+    Integer operator/(Integer &other) const;
+    Integer operator%(Integer &other) const;
 
-    virtual void printObject() const = 0;
+    Integer &operator+=(Integer &other);
+    Integer &operator-=(Integer &other);
+    Integer &operator*=(Integer &other);
+    Integer &operator/=(Integer &other);
+
+    virtual String toString() const override;
+
+    virtual void printObject() const override;
 
 
 

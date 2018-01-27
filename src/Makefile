@@ -1,62 +1,15 @@
-#Compiler and Linker
-CXX          := g++
+CXX = g++
+CXXFLAGS = -std=c++14 -O3 -Wall -Wextra -pedantic -Werror=vla -MMD
+EXEC = main
+OBJECTS = main.o ShellTable.o MetaRow.o Integer.o String.o Utils.o
+DEPENDS = ${OBJECTS:.o=.d}
 
-# Flags
-CXXFLAGS    := -std=c++11 -O0 -Wall -Wextra -pedantic -Werror=vla -MMD
+${EXEC}: ${OBJECTS}
+	${CXX} ${CXXFLAGS} ${OBJECTS} -o ${EXEC}
 
-#The Target Binary Program
-TARGET      := main
+-include ${DEPENDS}
 
-#The Directories, Source, Includes, Objects, Binary and Resources
-SRCDIR      := src
-INCDIR      := inc
-BUILDDIR    := obj
-TARGETDIR   := bin
-RESDIR      := res
-SRCEXT      := cpp
-DEPEXT      := d
-OBJEXT      := o
+.PHONY: clean
 
-# Includes
-INC         := -I$(INCDIR) #-I/usr/local/include
-INCDEP      := -I$(INCDIR)
-
-
-SOURCES     := $( find $(SRCDIR) -type f -name *.$(SRCEXT))
-OBJECTS     := $(patsubst $(SRCDIR)/%,$(BUILDDIR)/%,$(SOURCES:.$(SRCEXT)=.$(OBJEXT)))
-
-#Defauilt Make
-all: resources $(TARGET)
-
-#Remake
-remake: cleaner all
-
-#Make the Directories
-directories:
-	@mkdir -p $(TARGETDIR)
-	@mkdir -p $(BUILDDIR)
-
-#Clean only Objects
 clean:
-	@$(RM) -rf $(BUILDDIR)
-
-#Full Clean, Objects and Binaries
-cleaner: clean
-	@$(RM) -rf $(TARGETDIR)
-
-#Pull in dependency info for *existing* .o files
--include $(OBJECTS:.$(OBJEXT)=.$(DEPEXT))
-
-
-#Compile
-$(BUILDDIR)/%.$(OBJEXT): $(SRCDIR)/%.$(SRCEXT)
-	@mkdir -p $(dir $@)
-	$(CXX) $(CXXFLAGS) $(INC) -c -o $@ $<
-	@$(CXX) $(CXXFLAGS) $(INCDEP) -MM $(SRCDIR)/$*.$(SRCEXT) > $(BUILDDIR)/$*.$(DEPEXT)
-	@cp -f $(BUILDDIR)/$*.$(DEPEXT) $(BUILDDIR)/$*.$(DEPEXT).tmp
-	@sed -e 's|.*:|$(BUILDDIR)/$*.$(OBJEXT):|' < $(BUILDDIR)/$*.$(DEPEXT).tmp > $(BUILDDIR)/$*.$(DEPEXT)
-	@sed -e 's/.*://' -e 's/\\$$//' < $(BUILDDIR)/$*.$(DEPEXT).tmp | fmt -1 | sed -e 's/^ *//' -e 's/$$/:/' >> $(BUILDDIR)/$*.$(DEPEXT)
-	@rm -f $(BUILDDIR)/$*.$(DEPEXT).tmp
-
-#Non-File Targets
-.PHONY: all remake clean cleaner resources
+	rm ${OBJECTS} ${EXEC} ${DEPENDS}

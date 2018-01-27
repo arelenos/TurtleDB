@@ -2,7 +2,7 @@
 #include "String.h"
 
 // #include <string>
-// #include <vector>
+#include <vector>
 #include <iostream>
 #include <map>
 
@@ -17,22 +17,18 @@ enum class FileExtension { CSV, BIN, TXT }; // XLSX? :D
 // Instead of recreating this from scratch
 //  We can "borrow" from my vector class
 class TurtleRow {
-    std::size;
-    std::capacity;
+    std::size_t size;
+    std::size_t capacity;
     Object *row_data;
 public:
-    TurtleRow(int num_objects) {};
+    TurtleRow(int num_objects);
     ~TurtleRow() {};
 };
 
 class TurtleCol {};
 class MetaTable {};
 
-// Possibly have exceptions inherit from other exceptions?
-class NullPointerException {};
-class AllocationTooLargeException {};
 
-class InvalidTableInput {};
 
 typedef std::vector<std::string> VectorStr;
 typedef TurtleRow* TurtleRowPtr;
@@ -49,12 +45,12 @@ class TurtleTable {
 	MetaRow meta_row; 
 	MetaTable meta_data; // Shouldnt meta table contain meta row?
 
-	void _constructTableFromCSV(std::string fileloc);
-	void _constructTableFromBIN(std::string fileloc);
-    void _constructTableFromTXT(std::string fileloc);
+	// void _constructTableFromCSV(std::string fileloc);
+	// void _constructTableFromBIN(std::string fileloc);
+    // void _constructTableFromTXT(std::string fileloc);
     
 
-    void allocateData();
+    void allocateData(std::size_t num_rows, std::size_t num_cols, MetaRow mr);
     void displayTable();
 
 

@@ -2,33 +2,36 @@
 #define _STRING_H_
 
 #include "Object.h"
+#include "Integer.h"
 
 
 #include <string>
 
-
+// Can easily optimize this class by using char array... later.
 class String : public Object {
-    
-    std::string str_data;
-    int str_size;
-    int str_capacity;
+
+    std::string str_value;
 
 public:
 
-    String();
-    String(std::string s);
-    String(char *s);
-    ~String();
+    String(std::string value);
 
-    void toLower();
-    void toUpper();
+    
+    bool operator==(String &other) const;
+    bool operator!=(String &other) const override;
+    bool operator>(String &other) const override;
+    bool operator<(String &other) const override;
 
-    virtual Object *duplicate() const;
-    virtual ~String();
+    String operator+(String &other) const;
+    String &operator+=(String &other) const;
 
-    virtual void printObject() const override {
+    String toString() const override;
 
-    }
+    void printObject() const override;
+
+    String &toLower();
+    String &toUpper();
+    Integer to_integer();
 
 
 
